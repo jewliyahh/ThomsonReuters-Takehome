@@ -1,0 +1,34 @@
+Senior Data Engineer Coding Exercise
+
+Background:
+Enclosed within this Zip file, you have been provided with a CSV file containing flow records for a hypothetical system over a one-day period. Each row represents a “flow”, or computationally expensive workflow invoked via API. Each record has various attributes captured from the system logs.
+ 
+Dataset Schema:
+* flow_id: STRING
+* created_at: TIMESTAMP (UTC based)
+* finished_at: TIMESTAMP (UTC based)
+* status: STRING
+* type: STRING
+* region: STRING
+* user_id: STRING
+* org_id: STRING
+* tokens_in: INTEGER
+* tokens_out: INTEGER
+* llm_calls: INTEGER
+Note: Any sensitive data such as user_id and org_id have been anonymized.
+
+ Your Task:
+Create a Python command-line utility that will take in a CSV file representing a different day of flow records following the same schema. The command line utility should answer the following questions regarding the input data: 
+1. What is the 90th percentile LLM cost of each flow type based on the pricing available at https://openai.com/api/pricing/ for gpt-4o-2024-08-06 assuming no discounts? 
+2. Assuming token throughput for a given flow is distributed equally between minutes during which the flow is processing, what time (minute) is the peak token throughput during the course of the day?
+
+Requirements :
+- Python >= 3.11 
+- Provide a requirements.txt (or pyproject.toml and poetry.lock if using poetry)
+- Provide a readme.md  with instructions to install and run your application against a different CSV that follows the same schema
+- All functions, at the very least, should have type hints .
+
+Evaluation Criteria:
+The project will be evaluated based on accuracy, code cleanliness, and efficiency. Note that you will be need to orally walk through your code submission as part of a subsequent panel interview. Please avoid spending more than around 2 hours of effort on this coding project. 
+
+  If you have any questions, please email walter.defoor@thomsonreuters.com 
