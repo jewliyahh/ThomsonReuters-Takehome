@@ -4,7 +4,21 @@ from utils import format_datatypes, calculate_llm_cost, round_to_nearest_second,
 
 @click.command()
 @click.argument('input_csv', type=click.Path(exists=True))
-def process_data(input_csv):
+def process_data(input_csv: str) -> None:
+    """
+    Processes a CSV dataset by formatting data, calculating costs, rounding timestamps, 
+    removing missing values, and analyzing token throughput.
+
+    Parameters:
+    -----------
+    input_csv : str
+        Path to the CSV file.
+
+    Returns:
+    --------
+    None
+        Prints the 90th percentile LLM cost per flow type and the minute with the most tokens.
+    """
     # Load the dataset
     df = pd.read_csv(input_csv)
 
