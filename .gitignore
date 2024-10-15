@@ -1,6 +1,1 @@
-# Ignore virtual environment
-pyenv/
-.tr_take_home/
-.venv/
-env/
-venv/
+tr_take_home/
