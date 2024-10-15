@@ -3,8 +3,7 @@
 This CLI tool processes a CSV dataset containing details about various flows, including their creation and completion times, LLM token usage, and flow types. It performs the following operations:
 
 1. **Calculates the 90th percentile of LLM cost per flow type**.
-2. **Rounds the `created_at` and `finished_at` timestamps to the nearest minute**.
-3. **Generates a minute-by-minute token distribution and finds the peak token throughput**.
+2. **Generates a minute-by-minute token distribution and finds the peak token throughput**.
 
 ## Dataset Schema
 
@@ -30,7 +29,6 @@ The dataset should be in CSV format with the following schema:
   - Input Token Price: $2.50 per 1M tokens
   - Output Token Price: $10.00 per 1M tokens
 - **90th Percentile Calculation**: Computes the 90th percentile of LLM cost per flow type.
-- **Rounding Timestamps**: Rounds the `created_at` and `finished_at` columns to the nearest minute.
 - **Token Distribution**: Generates a minute-by-minute token distribution and identifies the peak minute for token throughput.
 
 ## Installation
