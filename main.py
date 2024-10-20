@@ -1,6 +1,6 @@
 import click
 import pandas as pd
-from utils import format_datatypes, calculate_llm_cost, round_to_nearest_second, generate_token_distribution, find_peak_token_throughput
+from utils import format_datatypes, calculate_llm_cost, generate_token_distribution, find_peak_token_throughput
 
 @click.command()
 @click.argument('input_csv', type=click.Path(exists=True))
@@ -30,10 +30,9 @@ def process_data(input_csv: str) -> None:
     print("\n90th Percentile LLM Cost per Flow Type:")
     print(llm_cost_90th_percentile)
 
-    # Round timestamps to the nearest minute
-    df['created_at_rounded'] = df['created_at'].apply(round_to_nearest_second)
-    df['finished_at_rounded'] = df['finished_at'].apply(round_to_nearest_second)
-
+    # Round timestamps to the nearest second
+    df['created_at_rounded'] = df['created_at'].dt.round('S')
+    df['finished_at_rounded'] = df['finished_at'].dt.round('S')
 
     # Remove rows with any NaT values
     df_cleaned = df.dropna()
