@@ -70,7 +70,7 @@ def generate_token_distribution(df: pd.DataFrame) -> pd.DataFrame:
         DataFrame containing second-level token distribution with timestamps and token counts.
     """
     df = df.copy()
-    # look into .dt.total_seconds()
+
     df['duration_seconds'] = (df['finished_at_rounded'] - df['created_at_rounded']).dt.total_seconds()
     df['total_tokens'] = df['tokens_in'] + df['tokens_out']
     df['tokens_per_second'] = df['total_tokens'] / df['duration_seconds'].replace(0, 1)  # Avoid division by zero
