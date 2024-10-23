@@ -70,21 +70,22 @@ def generate_token_distribution(df: pd.DataFrame) -> pd.DataFrame:
         DataFrame containing second-level token distribution with timestamps and token counts.
     """
     df = df.copy()
+    # look into .dt.total_seconds()
     df['duration_seconds'] = (df['finished_at_rounded'] - df['created_at_rounded']).dt.total_seconds()
     df['total_tokens'] = df['tokens_in'] + df['tokens_out']
     df['tokens_per_second'] = df['total_tokens'] / df['duration_seconds'].replace(0, 1)  # Avoid division by zero
     
     data_dict = df.to_dict(orient='records')
-    minutes, tokens = [], []
+    seconds, tokens = [], []
 
     for record in data_dict:
         second_range = pd.date_range(start=record['created_at_rounded'], 
                                       end=record['finished_at_rounded'], freq='S')
         num_seconds = len(second_range)
-        minutes.extend(second_range)
+        seconds.extend(second_range)
         tokens.extend([record['tokens_per_second']] * num_seconds)
 
-    token_distribution_df = pd.DataFrame({'second': minutes, 'tokens': tokens})
+    token_distribution_df = pd.DataFrame({'seconds': seconds, 'tokens': tokens})
     return token_distribution_df
 
 
@@ -102,7 +103,7 @@ def find_peak_token_throughput(token_distribution_df: pd.DataFrame) -> pd.Series
     pd.Series
         Series representing the minute with the highest token throughput and the token count.
     """
-    token_distribution_df['minute'] = token_distribution_df['second'].dt.floor('T')
+    token_distribution_df['minute'] = token_distribution_df['seconds'].dt.round('T')
     minute_records = token_distribution_df.groupby('minute')['tokens'].sum().reset_index()
     max_tokens_minute = minute_records.loc[minute_records['tokens'].idxmax()]
     
